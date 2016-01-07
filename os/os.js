@@ -30,14 +30,14 @@ module.exports = function(RED) {
 	    var outmsg = {
 	        topic: msg.topic
 	    };	
-		outmsg.payload = JSON.stringify({
+		outmsg.payload = {
     					hostname: os.hostname(),
     					type: os.type(),    					
     					platform: os.platform(),
     					arch: os.arch(),
     					release: os.release(),
     					endianness: os.endianness()    					
-  						});
+  						};
 		node.send(outmsg);
 		}); 
 
@@ -53,11 +53,11 @@ module.exports = function(RED) {
         node.on("input", function(msg) {
 	    var outmsg = {
 	        topic: msg.topic
-	    };	
-
+	    };
+	    
 	    df(function (error, response) {
     	if (error) { throw error; }
-    	outmsg.payload = JSON.stringify(response, null, 2);
+    	outmsg.payload =response;    
 		node.send(outmsg);
     	});
 		
@@ -76,7 +76,7 @@ module.exports = function(RED) {
 	    var outmsg = {
 	        topic: msg.topic
 	    };			
-		outmsg.payload = JSON.stringify({uptime: os.uptime()});
+		outmsg.payload = {uptime: os.uptime()};
 		node.send(outmsg);
 		}); 
     }
@@ -92,7 +92,7 @@ module.exports = function(RED) {
 	    var outmsg = {
 	        topic: msg.topic
 	    };			
-		outmsg.payload = JSON.stringify({cpus: os.cpus()});
+		outmsg.payload = {cpus: os.cpus()};
 		node.send(outmsg);
 		}); 
     }
@@ -108,7 +108,7 @@ module.exports = function(RED) {
 	    var outmsg = {
 	        topic: msg.topic
 	    };			
-		outmsg.payload = JSON.stringify({loadavg: os.loadavg()});
+		outmsg.payload = {loadavg: os.loadavg()};
 		node.send(outmsg);
 		}); 
     }
@@ -127,7 +127,7 @@ module.exports = function(RED) {
 	    var outmsg = {
 	        topic: msg.topic
 	    };			
-		outmsg.payload = JSON.stringify({ totalmem: tmem, freemem: fmem, memusage: pmem});
+		outmsg.payload = {totalmem: tmem, freemem: fmem, memusage: pmem};
 		node.send(outmsg);
 		}); 
     }
@@ -143,7 +143,7 @@ module.exports = function(RED) {
 	    var outmsg = {
 	        topic: msg.topic
 	    };			
-		outmsg.payload = JSON.stringify({networkInterfaces: os.networkInterfaces()});
+		outmsg.payload = {networkInterfaces: os.networkInterfaces()};
 		node.send(outmsg);
 		}); 
     }
