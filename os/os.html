@@ -61,8 +61,8 @@
 
 <script type="text/x-red" data-help-name="Drives">
     <p>Use this node to query the hard drives. </p>  
-    <p>Values for size, used and available are expressed in KiB (1024 bytes).</p>
-    <p> Value for capacity is a number between 0 and 1. capacity is also known as used% </p>
+    <p>Values for size, used and available are expressed in KB (1024 bytes).</p>
+    <p> Value for capacity is a number between 0 and 1. Capacity*100 is also known as percentage used. </p>
 </script>
 
 <script type="text/javascript">
@@ -157,7 +157,7 @@
 <script type="text/x-red" data-help-name="Loadavg">
     <p> Returns an array containing the 1, 5, and 15 minute load averages.</p>
     <p> The load average is a measure of system activity, calculated by the operating system and expressed as a fractional number. As a rule of thumb, the load average should ideally be less than the number of logical CPUs in the system.</p>
-    <p> The load average is a very UNIX-y concept; there is no real equivalent on Windows platforms. That is why this function always returns [0, 0, 0] on Windows. </p>       
+    <p> The load average is a very UNIX-y concept; there is no real equivalent on Windows platforms. That is why this node always returns [0, 0, 0] on Windows. </p>       
 </script>
 
 <script type="text/javascript">

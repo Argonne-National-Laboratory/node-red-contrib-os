@@ -1,0 +1,38 @@
+{
+  "name": "node-red-contrib-os",
+  "version": "0.1.0",
+  "description": "Node-Red nodes for obtaining cpu system information.",
+  "main": "os/os.js",
+  "dependencies": {
+    "node-df": "^0.1.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \\\"Error: no test specified\\\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Argonne-National-Laboratory/node-red-contrib-os.git"
+  },
+  "keywords": [
+    "node-red",
+    "operating system",
+    "network interface",
+    "cpu",
+    "memory",
+    "os",
+    "hard drive space",
+    "system information"
+  ],
+  "node-red": {
+    "nodes": {
+      "os": "os.js"
+    }
+  },
+  "author": "Jason D. Harper",
+  "license": "BSD-3-Clause",
+  "bugs": {
+    "url": "https://github.com/Argonne-National-Laboratory/node-red-contrib-os/issues"
+  },
+  "homepage": "https://github.com/Argonne-National-Laboratory/node-red-contrib-os#readme"
+}
