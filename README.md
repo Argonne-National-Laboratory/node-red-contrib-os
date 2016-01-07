@@ -37,7 +37,7 @@ Use this node to query the hard drives.
 
 Values for size, used and available are expressed in KiB (1024 bytes).
 
-Value for capacity is a number between 0 and 1. Capacity*100 is also known as percentage used..
+Value for capacity is a number between 0 and 1. Capacity*100 is also known as percentage used.
 
 ###Uptime
 
