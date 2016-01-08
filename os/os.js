@@ -117,13 +117,13 @@ module.exports = function(RED) {
 
 	function Memory(n) {
         RED.nodes.createNode(this,n);        
-		var node = this;
-		var tmem = os.totalmem();
-		var fmem = os.freemem();
-		var pmem = ((fmem/tmem)*100).toFixed(2);
+		var node = this;		
 		this.name = n.name;		 
 	
         node.on("input", function(msg) {
+        var tmem = os.totalmem();
+		var fmem = os.freemem();
+		var pmem = ((fmem/tmem)*100).toFixed(2);
 	    var outmsg = {
 	        topic: msg.topic
 	    };			
