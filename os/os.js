@@ -106,7 +106,7 @@ module.exports = function(RED) {
         node.on("input", function(msg) {
             var tmem = os.totalmem();
             var fmem = os.freemem();
-            var pmem = ((fmem/tmem)*100).toFixed(2);
+            var pmem = (100 - (fmem/tmem)*100).toFixed(2);
             msg.payload = {totalmem: tmem, freemem: fmem, memusage: pmem};
             node.send(msg);
         });
