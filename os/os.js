@@ -20,133 +20,112 @@ module.exports = function(RED) {
     var settings = RED.settings;
     var os = require('os');
     var df = require('node-df');
-   
+
     function OS(n) {
-        RED.nodes.createNode(this,n);        
+        RED.nodes.createNode(this,n);
 		var node = this;
-		this.name = n.name;		 
-	
+		this.name = n.name;
+
         node.on("input", function(msg) {
-	    var outmsg = {
-	        topic: msg.topic
-	    };	
-		outmsg.payload = {
+		    msg.payload = {
     					hostname: os.hostname(),
-    					type: os.type(),    					
+    					type: os.type(),
     					platform: os.platform(),
     					arch: os.arch(),
     					release: os.release(),
-    					endianness: os.endianness()    					
+    					endianness: os.endianness()
   						};
-		node.send(outmsg);
-		}); 
+		    node.send(msg);
+		});
 
     }
 
-    RED.nodes.registerType("OS",OS);   
+    RED.nodes.registerType("OS",OS);
 
 	function Drives(n) {
-        RED.nodes.createNode(this,n);        
+        RED.nodes.createNode(this,n);
 		var node = this;
-		this.name = n.name;		 
-	
+		this.name = n.name;
+
         node.on("input", function(msg) {
-	    var outmsg = {
-	        topic: msg.topic
-	    };
-	    
-	    df(function (error, response) {
-    	if (error) { throw error; }
-    	outmsg.payload =response;    
-		node.send(outmsg);
-    	});
-		
-		}); 
+
+    	    df(function (error, response) {
+        	    if (error) { throw error; }
+        	    msg.payload = response;
+    		    node.send(msg);
+        	});
+
+		});
 
     }
 
-    RED.nodes.registerType("Drives",Drives);    
+    RED.nodes.registerType("Drives",Drives);
 
 	function Uptime(n) {
-        RED.nodes.createNode(this,n);        
+        RED.nodes.createNode(this,n);
 		var node = this;
-		this.name = n.name;		 
-	
+		this.name = n.name;
+
         node.on("input", function(msg) {
-	    var outmsg = {
-	        topic: msg.topic
-	    };			
-		outmsg.payload = {uptime: os.uptime()};
-		node.send(outmsg);
-		}); 
+		    msg.payload = {uptime: os.uptime()};
+		    node.send(msg);
+		});
     }
 
-    RED.nodes.registerType("Uptime",Uptime); 
+    RED.nodes.registerType("Uptime",Uptime);
 
 	function CPUs(n) {
-        RED.nodes.createNode(this,n);        
+        RED.nodes.createNode(this,n);
 		var node = this;
-		this.name = n.name;		 
-	
+		this.name = n.name;
+
         node.on("input", function(msg) {
-	    var outmsg = {
-	        topic: msg.topic
-	    };			
-		outmsg.payload = {cpus: os.cpus()};
-		node.send(outmsg);
-		}); 
+		    msg.payload = {cpus: os.cpus()};
+		    node.send(msg);
+		});
     }
 
     RED.nodes.registerType("CPUs",CPUs);
 
 	function Loadavg(n) {
-        RED.nodes.createNode(this,n);        
+        RED.nodes.createNode(this,n);
 		var node = this;
-		this.name = n.name;		 
-	
+		this.name = n.name;
+
         node.on("input", function(msg) {
-	    var outmsg = {
-	        topic: msg.topic
-	    };			
-		outmsg.payload = {loadavg: os.loadavg()};
-		node.send(outmsg);
-		}); 
+    		msg.payload = {loadavg: os.loadavg()};
+    		node.send(msg);
+		});
     }
 
     RED.nodes.registerType("Loadavg",Loadavg);
 
 	function Memory(n) {
-        RED.nodes.createNode(this,n);        
-		var node = this;		
-		this.name = n.name;		 
-	
+        RED.nodes.createNode(this,n);
+		var node = this;
+		this.name = n.name;
+
         node.on("input", function(msg) {
-        var tmem = os.totalmem();
-		var fmem = os.freemem();
-		var pmem = ((fmem/tmem)*100).toFixed(2);
-	    var outmsg = {
-	        topic: msg.topic
-	    };			
-		outmsg.payload = {totalmem: tmem, freemem: fmem, memusage: pmem};
-		node.send(outmsg);
-		}); 
+            var tmem = os.totalmem();
+    		var fmem = os.freemem();
+    		var pmem = ((fmem/tmem)*100).toFixed(2);
+    		msg.payload = {totalmem: tmem, freemem: fmem, memusage: pmem};
+    		node.send(msg);
+		});
     }
 
     RED.nodes.registerType("Memory",Memory);
 
-    function NetworkIntf(n) {        
-        RED.nodes.createNode(this,n);        
+    function NetworkIntf(n) {
+        RED.nodes.createNode(this,n);
 		var node = this;
-		this.name = n.name;		 
-	
+		this.name = n.name;
+
         node.on("input", function(msg) {
-	    var outmsg = {
-	        topic: msg.topic
-	    };			
-		outmsg.payload = {networkInterfaces: os.networkInterfaces()};
-		node.send(outmsg);
-		}); 
+    		msg.payload = {networkInterfaces: os.networkInterfaces()};
+    		node.send(msg);
+		});
     }
 
-    RED.nodes.registerType("NetworkIntf",NetworkIntf);   
+    RED.nodes.registerType("NetworkIntf",NetworkIntf);
 }
