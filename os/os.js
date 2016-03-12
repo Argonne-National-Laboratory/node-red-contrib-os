@@ -28,34 +28,32 @@ module.exports = function(RED) {
 
         node.on("input", function(msg) {
 		    msg.payload = {
-    					hostname: os.hostname(),
-    					type: os.type(),
-    					platform: os.platform(),
-    					arch: os.arch(),
-    					release: os.release(),
-    					endianness: os.endianness()
-  						};
-		    node.send(msg);
-		});
+                hostname: os.hostname(),
+    			type: os.type(),
+    			platform: os.platform(),
+    			arch: os.arch(),
+    			release: os.release(),
+    			endianness: os.endianness()
+  			};
+            node.send(msg);
+        });
 
     }
 
     RED.nodes.registerType("OS",OS);
 
-	function Drives(n) {
+    function Drives(n) {
         RED.nodes.createNode(this,n);
-		var node = this;
-		this.name = n.name;
+        var node = this;
+        this.name = n.name;
 
         node.on("input", function(msg) {
-
-    	    df(function (error, response) {
-        	    if (error) { throw error; }
-        	    msg.payload = response;
-    		    node.send(msg);
-        	});
-
-		});
+            df(function (error, response) {
+                if (error) { throw error; }
+                msg.payload = response;
+                node.send(msg);
+            });
+        });
 
     }
 
@@ -67,9 +65,9 @@ module.exports = function(RED) {
 		this.name = n.name;
 
         node.on("input", function(msg) {
-		    msg.payload = {uptime: os.uptime()};
-		    node.send(msg);
-		});
+            msg.payload = {uptime: os.uptime()};
+            node.send(msg);
+        });
     }
 
     RED.nodes.registerType("Uptime",Uptime);
@@ -80,51 +78,51 @@ module.exports = function(RED) {
 		this.name = n.name;
 
         node.on("input", function(msg) {
-		    msg.payload = {cpus: os.cpus()};
-		    node.send(msg);
-		});
+            msg.payload = {cpus: os.cpus()};
+            node.send(msg);
+        });
     }
 
     RED.nodes.registerType("CPUs",CPUs);
 
-	function Loadavg(n) {
+    function Loadavg(n) {
         RED.nodes.createNode(this,n);
-		var node = this;
-		this.name = n.name;
+        var node = this;
+        this.name = n.name;
 
         node.on("input", function(msg) {
-    		msg.payload = {loadavg: os.loadavg()};
-    		node.send(msg);
-		});
+            msg.payload = {loadavg: os.loadavg()};
+            node.send(msg);
+        });
     }
 
     RED.nodes.registerType("Loadavg",Loadavg);
 
-	function Memory(n) {
+    function Memory(n) {
         RED.nodes.createNode(this,n);
-		var node = this;
-		this.name = n.name;
+        var node = this;
+        this.name = n.name;
 
         node.on("input", function(msg) {
             var tmem = os.totalmem();
-    		var fmem = os.freemem();
-    		var pmem = ((fmem/tmem)*100).toFixed(2);
-    		msg.payload = {totalmem: tmem, freemem: fmem, memusage: pmem};
-    		node.send(msg);
-		});
+            var fmem = os.freemem();
+            var pmem = ((fmem/tmem)*100).toFixed(2);
+            msg.payload = {totalmem: tmem, freemem: fmem, memusage: pmem};
+            node.send(msg);
+        });
     }
 
     RED.nodes.registerType("Memory",Memory);
 
     function NetworkIntf(n) {
         RED.nodes.createNode(this,n);
-		var node = this;
-		this.name = n.name;
+        var node = this;
+        this.name = n.name;
 
         node.on("input", function(msg) {
-    		msg.payload = {networkInterfaces: os.networkInterfaces()};
-    		node.send(msg);
-		});
+            msg.payload = {networkInterfaces: os.networkInterfaces()};
+            node.send(msg);
+        });
     }
 
     RED.nodes.registerType("NetworkIntf",NetworkIntf);
