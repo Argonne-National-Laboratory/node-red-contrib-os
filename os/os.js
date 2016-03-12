@@ -23,18 +23,18 @@ module.exports = function(RED) {
 
     function OS(n) {
         RED.nodes.createNode(this,n);
-		var node = this;
-		this.name = n.name;
+        var node = this;
+        this.name = n.name;
 
         node.on("input", function(msg) {
-		    msg.payload = {
+            msg.payload = {
                 hostname: os.hostname(),
-    			type: os.type(),
-    			platform: os.platform(),
-    			arch: os.arch(),
-    			release: os.release(),
-    			endianness: os.endianness()
-  			};
+                type: os.type(),
+                platform: os.platform(),
+                arch: os.arch(),
+                release: os.release(),
+                endianness: os.endianness()
+            };
             node.send(msg);
         });
 
@@ -59,10 +59,10 @@ module.exports = function(RED) {
 
     RED.nodes.registerType("Drives",Drives);
 
-	function Uptime(n) {
+    function Uptime(n) {
         RED.nodes.createNode(this,n);
-		var node = this;
-		this.name = n.name;
+        var node = this;
+        this.name = n.name;
 
         node.on("input", function(msg) {
             msg.payload = {uptime: os.uptime()};
@@ -72,10 +72,10 @@ module.exports = function(RED) {
 
     RED.nodes.registerType("Uptime",Uptime);
 
-	function CPUs(n) {
+    function CPUs(n) {
         RED.nodes.createNode(this,n);
-		var node = this;
-		this.name = n.name;
+        var node = this;
+        this.name = n.name;
 
         node.on("input", function(msg) {
             msg.payload = {cpus: os.cpus()};
