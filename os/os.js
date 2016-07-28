@@ -33,7 +33,9 @@ module.exports = function(RED) {
                 platform: os.platform(),
                 arch: os.arch(),
                 release: os.release(),
-                endianness: os.endianness()
+                endianness: os.endianness(),
+                tmpdir: os.tmpdir(),
+                homedir: os.homedir()
             };
             node.send(msg);
         });
