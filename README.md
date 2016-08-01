@@ -33,8 +33,6 @@ Returns the endianness of the CPU. Possible values are 'BE' for big endian or 'L
 
 Returns the operating system's default directory for temp files.
 
-Returns the home directory of the current user as a string.
-
 ###Drives
 
 Use this node to query the hard drives.

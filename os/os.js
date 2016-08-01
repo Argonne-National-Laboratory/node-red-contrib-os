@@ -34,8 +34,7 @@ module.exports = function(RED) {
                 arch: os.arch(),
                 release: os.release(),
                 endianness: os.endianness(),
-                tmpdir: os.tmpdir(),
-                homedir: os.homedir()
+                tmpdir: os.tmpdir()                
             };
             node.send(msg);
         });
