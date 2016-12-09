@@ -15,8 +15,6 @@
  **/
 
 module.exports = function(RED) {
-    "use strict";
-    var RED = require(process.env.NODE_RED_HOME+"/red/red");
     var settings = RED.settings;
     var os = require('os');
     var df = require('node-df');
