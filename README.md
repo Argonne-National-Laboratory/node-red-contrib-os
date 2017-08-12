@@ -13,9 +13,9 @@ Run the following command in the root directory of your Node-RED install
 
     npm install node-red-contrib-os
 
-#Nodes
+# Nodes
 
-###OS
+### OS
 
 Use this node to query the operating system.
 
@@ -33,7 +33,7 @@ Returns the endianness of the CPU. Possible values are 'BE' for big endian or 'L
 
 Returns the operating system's default directory for temp files.
 
-###Drives
+### Drives
 
 Use this node to query the hard drives.
 
@@ -41,15 +41,15 @@ Values for size, used and available are expressed in KiB (1024 bytes).
 
 Value for capacity is a number between 0 and 1. Capacity*100 is also known as percentage used.
 
-###Uptime
+### Uptime
 
 Use this node to return the system uptime in seconds. 
 
-###CPUs
+### CPUs
 
 Returns an array of objects containing information about each CPU/core installed: model, speed (in MHz), and times (an object containing the number of milliseconds the CPU/core spent in: user, nice, sys, idle, and irq).
 
-###Loadavg
+### Loadavg
 
 Returns an array containing the 1, 5, and 15 minute load averages.
 
@@ -57,7 +57,7 @@ The load average is a measure of system activity, calculated by the operating sy
 
 The load average is a very UNIX-y concept; there is no real equivalent on Windows platforms. That is why this node always returns [0, 0, 0] on Windows.
 
-###Memory
+### Memory
 
 Use this node to query the system''s memory.
 
@@ -67,13 +67,13 @@ Returns the amount of free system memory in bytes.
 
 Returns the memory in use as a percentage.
 
-###NetworkIntf
+### NetworkIntf
 
 Use this node to get a list of network interfaces on the system.
 
 Note that due to the underlying implementation this will only return network interfaces that have been assigned an address.
 
-#Author
+# Author
 
 [Jason D. Harper][3]
 
