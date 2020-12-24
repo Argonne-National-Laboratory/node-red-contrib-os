@@ -7,7 +7,7 @@ node-red-contrib-os
 
 These nodes utilize the [Node.js OS Library][2] to obtain basic operating-system related utility functions.
 
-#Install
+# Install
 
 Run the following command in the root directory of your Node-RED install
 
@@ -55,15 +55,15 @@ Returns an array containing the 1, 5, and 15 minute load averages.
 
 The load average is a measure of system activity, calculated by the operating system and expressed as a fractional number. As a rule of thumb, the load average should ideally be less than the number of logical CPUs in the system.
 
-The load average is a very UNIX-y concept; there is no real equivalent on Windows platforms. That is why this node always returns [0, 0, 0] on Windows.
+The load average is a very UNIX-y concept; there is no real equivalent on Windows platforms. That is why on Windows, loadavg-windows is used to have an approximation of the average load.
 
 ### Memory
 
 Use this node to query the system''s memory.
 
-Returns the total amount of system memory in bytes.
+Returns the total amount of system memory in bytes, kilobytes, megabytes or gigabytes.
 
-Returns the amount of free system memory in bytes.
+Returns the amount of free system memory in bytes, kilobytes, megabytes or gigabytes.
 
 Returns the memory in use as a percentage.
 

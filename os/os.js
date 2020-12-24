@@ -15,14 +15,15 @@
  **/
 
 module.exports = function(RED) {
-    var settings = RED.settings;
-    var os = require('os');
-    var df = require('node-df');
+    const settings = RED.settings;
+    require('loadavg-windows');
+    const os = require('os');
+    const nodeDiskInfo = require('node-disk-info');
 
-    function OS(n) {
-        RED.nodes.createNode(this,n);
-        var node = this;
-        this.name = n.name;
+    function OS(config) {
+        RED.nodes.createNode(this,config);
+        const node = this;
+        this.name = config.name;
 
         node.on("input", function(msg) {
             msg.payload = {
@@ -32,7 +33,7 @@ module.exports = function(RED) {
                 arch: os.arch(),
                 release: os.release(),
                 endianness: os.endianness(),
-                tmpdir: os.tmpdir()                
+                tmpdir: os.tmpdir()
             };
             node.send(msg);
         });
@@ -41,27 +42,56 @@ module.exports = function(RED) {
 
     RED.nodes.registerType("OS",OS);
 
-    function Drives(n) {
-        RED.nodes.createNode(this,n);
-        var node = this;
-        this.name = n.name;
+    function Drives(config) {
+        RED.nodes.createNode(this,config);
+        const node = this;
+        this.name = config.name;
 
         node.on("input", function(msg) {
-            df(function (error, response) {
-                if (error) { throw error; }
-                msg.payload = response;
+            try {
+                const disks = nodeDiskInfo.getDiskInfoSync();
+                const payload = []
+                disks.forEach((disk) => {
+                    payload.push({
+                        "filesystem": disk.filesystem,
+                        "size": disk.blocks,
+                        "used": disk.used,
+                        "available": disk.available,
+                        "capacity": parseFloat(disk.capacity.replace("%", "")) / 100,
+                        "mount": disk.mounted
+                    })
+                })
+                /** old node-df output:
+                 * "filesystem": "/dev/disk0s2",
+                 * "size": 487546976,
+                 * "used": 164493356,
+                 * "available": 322797620,
+                 * "capacity": 0.34,
+                 * "mount": "/" 
+                 * */
+                /** new node-disk-info output:
+                 * Filesystem: "Local Fixed Disk"
+                 * Blocks: 499344470016
+                 * Used: 166232281088
+                 * Available: 333112188928
+                 * Capacity: "33%"
+                 * Mounted: "C:"
+                 * */
+                msg.payload = payload;
                 node.send(msg);
-            });
+            } catch (error) {
+                node.error(error);
+            }
         });
 
     }
 
     RED.nodes.registerType("Drives",Drives);
 
-    function Uptime(n) {
-        RED.nodes.createNode(this,n);
-        var node = this;
-        this.name = n.name;
+    function Uptime(config) {
+        RED.nodes.createNode(this,config);
+        const node = this;
+        this.name = config.name;
 
         node.on("input", function(msg) {
             msg.payload = {uptime: os.uptime()};
@@ -71,10 +101,10 @@ module.exports = function(RED) {
 
     RED.nodes.registerType("Uptime",Uptime);
 
-    function CPUs(n) {
-        RED.nodes.createNode(this,n);
-        var node = this;
-        this.name = n.name;
+    function CPUs(config) {
+        RED.nodes.createNode(this,config);
+        const node = this;
+        this.name = config.name;
 
         node.on("input", function(msg) {
             msg.payload = {cpus: os.cpus()};
@@ -84,11 +114,10 @@ module.exports = function(RED) {
 
     RED.nodes.registerType("CPUs",CPUs);
 
-    function Loadavg(n) {
-        RED.nodes.createNode(this,n);
-        var node = this;
-        this.name = n.name;
-
+    function Loadavg(config) {
+        RED.nodes.createNode(this,config);
+        const node = this;
+        this.name = config.name;
         node.on("input", function(msg) {
             msg.payload = {loadavg: os.loadavg()};
             node.send(msg);
@@ -97,26 +126,49 @@ module.exports = function(RED) {
 
     RED.nodes.registerType("Loadavg",Loadavg);
 
-    function Memory(n) {
-        RED.nodes.createNode(this,n);
-        var node = this;
-        this.name = n.name;
+    function Memory(config) {
+        RED.nodes.createNode(this,config);
+        const node = this;
+        this.name = config.name;
+		const scale = config.scale;
 
         node.on("input", function(msg) {
-            var tmem = os.totalmem();
-            var fmem = os.freemem();
-            var pmem = (100 - (fmem/tmem)*100).toFixed(2);
-            msg.payload = {totalmem: tmem, freemem: fmem, memusage: pmem};
+            let tmem = os.totalmem();
+            let fmem = os.freemem();
+            const pmem = parseFloat((100 - (fmem / tmem) * 100).toFixed(2));
+			switch(scale) {
+				case "Byte":
+					break;
+				case "Kilobyte":
+					tmem = parseFloat((tmem / 1024).toFixed(3));
+					fmem = parseFloat((fmem / 1024).toFixed(3));
+					break;
+				case "Megabyte":
+					tmem = parseFloat((tmem / 1048576).toFixed(3));
+					fmem = parseFloat((fmem / 1048576).toFixed(3));
+					break;
+                case "Gigabyte":
+                    tmem = parseFloat((tmem / 1073741824).toFixed(3));
+                    fmem = parseFloat((fmem / 1073741824).toFixed(3));
+                    break;
+				default:
+					break;
+			}
+            msg.payload = {
+                totalmem: tmem, 
+                freemem: fmem, 
+                memusage: pmem
+            };
             node.send(msg);
         });
     }
 
     RED.nodes.registerType("Memory",Memory);
 
-    function NetworkIntf(n) {
-        RED.nodes.createNode(this,n);
-        var node = this;
-        this.name = n.name;
+    function NetworkIntf(config) {
+        RED.nodes.createNode(this,config);
+        const node = this;
+        this.name = config.name;
 
         node.on("input", function(msg) {
             msg.payload = {networkInterfaces: os.networkInterfaces()};
