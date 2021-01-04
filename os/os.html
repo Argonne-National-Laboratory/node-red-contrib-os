@@ -183,14 +183,23 @@
     <div class="form-row">
         <label for="node-input-name"><i class="icon-tag"></i> Name</label>
         <input type="text" id="node-input-name" placeholder="Name">
-    </div>  
+    </div> 
+	<div class="form-row">
+		<label for="node-input-scale"><i class="icon-tag"></i> Scale</label>
+		<select type="text" id="node-input-scale" placeholder="scale">
+			<option value="Byte">Byte</option>
+			<option value="Kilobyte">Kilobyte (KB)</option>
+			<option value="Megabyte">Megabyte (MB)</option>
+			<option value="Gigabyte">Gigabyte (GB)</option>
+		</select>
+	</div>
      
 </script>
 
 <script type="text/x-red" data-help-name="Memory">
-    <p>Use this node to query the system''s memory. </p> 
-    <p> Returns the total amount of system memory in bytes.
-    <p> Returns the amount of free system memory in bytes.</p>   
+    <p>Use this node to query the system's memory. </p> 
+    <p> Returns the total amount of system memory in bytes, kilobytes, megabytes or gigabytes.
+    <p> Returns the amount of free system memory in bytes, kilobytes, megabytes or gigabytes.</p>   
     <p> Returns the memory in use as a percentage. </p>    
 </script>
 
@@ -199,8 +208,9 @@
         category: 'Operating System',
         color:"#3FADB5",
         defaults: {
-            name: {value:""},                                       
-        },        
+            name: {value:""},
+            scale: {value:"Byte"},
+        },
         inputs:1,
         outputs:1,
         icon: "os.png",
@@ -217,7 +227,7 @@
     <div class="form-row">
         <label for="node-input-name"><i class="icon-tag"></i> Name</label>
         <input type="text" id="node-input-name" placeholder="Name">
-    </div>  
+    </div>
      
 </script>
 
