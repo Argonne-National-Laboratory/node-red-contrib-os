@@ -1,5 +1,4 @@
-node-red-contrib-os
-===========================
+# node-red-contrib-os
 
 [![NPM](https://nodei.co/npm/node-red-contrib-os.png)](https://nodei.co/npm/node-red-contrib-os/)
 
@@ -7,13 +6,13 @@ node-red-contrib-os
 
 These nodes utilize the [Node.js OS Library][2] to obtain basic operating-system related utility functions.
 
-# Install
+## Install
 
 Run the following command in the root directory of your Node-RED install
 
     npm install node-red-contrib-os
 
-# Nodes
+## Nodes
 
 ### OS
 
@@ -43,7 +42,7 @@ Value for capacity is a number between 0 and 1. Capacity*100 is also known as pe
 
 ### Uptime
 
-Use this node to return the system uptime in seconds. 
+Use this node to return the system uptime in seconds.
 
 ### CPUs
 
@@ -73,12 +72,10 @@ Use this node to get a list of network interfaces on the system.
 
 Note that due to the underlying implementation this will only return network interfaces that have been assigned an address.
 
-# Author
+## Author
 
 [Jason D. Harper][3]
 
-
-[1]:http://nodered.org
-[2]:https://nodejs.org/api/os.html
+[1]:http://nodered.org  
+[2]:https://nodejs.org/api/os.html  
 [3]:https://github.com/jayharper
-

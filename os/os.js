@@ -16,9 +16,9 @@
 
 module.exports = function(RED) {
     const settings = RED.settings;
-    require('loadavg-windows');
-    const os = require('os');
-    const nodeDiskInfo = require('node-disk-info');
+    require("loadavg-windows");
+    const os = require("os");
+    const nodeDiskInfo = require("node-disk-info");
 
     function OS(config) {
         RED.nodes.createNode(this,config);
@@ -50,7 +50,7 @@ module.exports = function(RED) {
         node.on("input", function(msg) {
             try {
                 const disks = nodeDiskInfo.getDiskInfoSync();
-                const payload = []
+                const payload = [];
                 disks.forEach((disk) => {
                     payload.push({
                         "filesystem": disk.filesystem,
@@ -59,8 +59,8 @@ module.exports = function(RED) {
                         "available": disk.available,
                         "capacity": parseFloat(disk.capacity.replace("%", "")) / 100,
                         "mount": disk.mounted
-                    })
-                })
+                    });
+                });
                 /** old node-df output:
                  * "filesystem": "/dev/disk0s2",
                  * "size": 487546976,
@@ -130,30 +130,30 @@ module.exports = function(RED) {
         RED.nodes.createNode(this,config);
         const node = this;
         this.name = config.name;
-		const scale = config.scale;
+        const scale = config.scale;
 
         node.on("input", function(msg) {
             let tmem = os.totalmem();
             let fmem = os.freemem();
             const pmem = parseFloat((100 - (fmem / tmem) * 100).toFixed(2));
-			switch(scale) {
-				case "Byte":
-					break;
-				case "Kilobyte":
-					tmem = parseFloat((tmem / 1024).toFixed(3));
-					fmem = parseFloat((fmem / 1024).toFixed(3));
-					break;
-				case "Megabyte":
-					tmem = parseFloat((tmem / 1048576).toFixed(3));
-					fmem = parseFloat((fmem / 1048576).toFixed(3));
-					break;
-                case "Gigabyte":
-                    tmem = parseFloat((tmem / 1073741824).toFixed(3));
-                    fmem = parseFloat((fmem / 1073741824).toFixed(3));
+            switch(scale) {
+                case "Byte":
                     break;
-				default:
-					break;
-			}
+                case "Kilobyte":
+                    tmem = parseFloat((tmem / 1024).toFixed(3));
+                    fmem = parseFloat((fmem / 1024).toFixed(3));
+                    break;
+                case "Megabyte":
+                    tmem = parseFloat((tmem / (1024 * 1024)).toFixed(3));
+                    fmem = parseFloat((fmem / (1024 * 1024)).toFixed(3));
+                    break;
+                case "Gigabyte":
+                    tmem = parseFloat((tmem / (1024 * 1024 * 1024)).toFixed(3));
+                    fmem = parseFloat((fmem / (1024 * 1024 * 1024)).toFixed(3));
+                    break;
+                default:
+                    break;
+            }
             msg.payload = {
                 totalmem: tmem, 
                 freemem: fmem, 
@@ -177,4 +177,4 @@ module.exports = function(RED) {
     }
 
     RED.nodes.registerType("NetworkIntf",NetworkIntf);
-}
+};
